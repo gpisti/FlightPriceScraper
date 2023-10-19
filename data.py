@@ -61,8 +61,6 @@ def get_tickets(date):
     pp = [x.text for x in prices]
     ll = [x.text for x in locations]
 
-    print(f"{date}\n\t{pp}\n\t{pp}")
-
     for i in range(len(pp)):
         intpp = ""
         for e in pp[i]:
