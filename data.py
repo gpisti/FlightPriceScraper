@@ -7,7 +7,7 @@ from selenium.webdriver.common.by import By
 
 WAIT_TIMEOUT = 5  # Meghatározza, mennyi időt szánjon a kód, 1 napnyi repülőjegyek lementésére (Adat hiány esetén növelendő)
 PATH_FOR_ADATOKTXT = "D:\Prog\Projektek\WebScrape\\adatok.txt"  # Az adatok.txt file elérési útja
-DAYS = 30  # Adatok frissétése esetén ennyi napot lefedve szedi össze az új adatokat
+DAYS = 5  # Adatok frissétése esetén ennyi napot lefedve szedi össze az új adatokat
 
 
 # A megadott dátumhoz képest határozza meg a holnapi nap dátumát éééé-hh-nn formátumban
@@ -56,10 +56,12 @@ def get_tickets(date):
 
     prices = driver.find_elements(By.XPATH, "//span[contains(@class, 'length-9') or contains(@class, 'length-10')]")
     locations = driver.find_elements(By.XPATH,
-                                     '//div[contains(@class,"PictureCardstyled__Destination-sc-mm2sw5-11 bFbLRo")]')
+                                     '//div[contains(@class, "flex items-center justify-between de:group-hover:text-primary-foreground")]')
+
 
     pp = [x.text for x in prices]
     ll = [x.text for x in locations]
+
 
     for i in range(len(pp)):
         intpp = ""
@@ -97,7 +99,7 @@ def city_search():
     city = input("Adja meg a város nevét!\n->")
     for dict in allData:
         for k, v in dict.items():
-            if k == city.capitalize():
+            if k == city.title():
                 cheapest.append(v)
     if len(cheapest) == 0:
         return "Ide nem indul egy repülő sem."
@@ -155,7 +157,7 @@ def list_cities():
         if c == 5:
             print()
             c = 1
-
+    print()
 
 # A már meglévő "elavult" adatokat frissíti
 def refresh_data():
