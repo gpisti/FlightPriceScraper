@@ -6,8 +6,9 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 
 WAIT_TIMEOUT = 5  # Meghatározza, mennyi időt szánjon a kód, 1 napnyi repülőjegyek lementésére (Adat hiány esetén növelendő)
-PATH_FOR_ADATOKTXT = "D:\Prog\Projektek\WebScrape\\adatok.txt"  # Az adatok.txt file elérési útja
-DAYS = 5  # Adatok frissétése esetén ennyi napot lefedve szedi össze az új adatokat
+FOR_PATH = "\\".join(sys.argv[0].split("\\")[:-1]) # PATH_FOR_ADATOKTXT segédváltozója
+PATH_FOR_ADATOKTXT = f'{FOR_PATH}\\adatok.txt'  # Az adatok.txt file elérési útja
+DAYS = 5  # Adatok frissétése esetén ennyi napot lefedve szedi össze az új adatokat (a mai nap nem számít bele)
 
 
 # A megadott dátumhoz képest határozza meg a holnapi nap dátumát éééé-hh-nn formátumban
@@ -170,7 +171,7 @@ def refresh_data():
         gen.close()
 
     tdate = str(date.today())
-    for i in range(DAYS):
+    for i in range(DAYS+1):
         get_tickets(tdate)
         tdate = next_day(tdate)
     driver.close()
